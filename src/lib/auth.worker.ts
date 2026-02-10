@@ -13,6 +13,6 @@ export const auth = (env: WorkerEnv) => {
 
   return betterAuth({
     ...getAuthOptions(env),
-    database: drizzleAdapter(db, { provider: "sqlite" }),
+    database: drizzleAdapter(db, { provider: "sqlite", usePlural: true }),
   });
 };

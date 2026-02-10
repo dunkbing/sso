@@ -36,7 +36,7 @@ export const sessions = sqliteTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
   },
-  (table) => [index("sessions_userId_idx").on(table.userId)]
+  (table) => [index("sessions_userId_idx").on(table.userId)],
 );
 
 export const accounts = sqliteTable(
@@ -66,7 +66,7 @@ export const accounts = sqliteTable(
       .notNull()
       .$onUpdate(() => new Date()),
   },
-  (table) => [index("accounts_userId_idx").on(table.userId)]
+  (table) => [index("accounts_userId_idx").on(table.userId)],
 );
 
 export const verifications = sqliteTable(
@@ -83,10 +83,10 @@ export const verifications = sqliteTable(
       .notNull()
       .$onUpdate(() => new Date()),
   },
-  (table) => [index("verifications_identifier_idx").on(table.identifier)]
+  (table) => [index("verifications_identifier_idx").on(table.identifier)],
 );
 
-export const jwks = sqliteTable("jwks", {
+export const jwks = sqliteTable("jwkss", {
   id: text("id").primaryKey(),
   publicKey: text("public_key").notNull(),
   privateKey: text("private_key").notNull(),
