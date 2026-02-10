@@ -1,9 +1,8 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { auth } from "./lib/auth.worker";
-import type { AuthEnv } from "./lib/auth-options";
+import { auth, type WorkerEnv } from "./lib/auth.worker";
 
-const app = new Hono<{ Bindings: AuthEnv }>();
+const app = new Hono<{ Bindings: WorkerEnv }>();
 
 app.use(
   "/api/auth/*",

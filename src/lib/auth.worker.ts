@@ -1,16 +1,18 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import postgres from "postgres";
-import { drizzle } from "drizzle-orm/postgres-js";
-import * as schema from "../db/schema";
+import { drizzle } from "drizzle-orm/d1";
+import * as schema from "../db/schema.d1";
 import { getAuthOptions, type AuthEnv } from "./auth-options";
 
-export const auth = (env: AuthEnv) => {
-  const client = postgres(env.DATABASE_URL);
-  const db = drizzle(client, { schema });
+export interface WorkerEnv extends AuthEnv {
+  DB: D1Database;
+}
+
+export const auth = (env: WorkerEnv) => {
+  const db = drizzle(env.DB, { schema });
 
   return betterAuth({
     ...getAuthOptions(env),
-    database: drizzleAdapter(db, { provider: "pg" }),
+    database: drizzleAdapter(db, { provider: "sqlite", usePlural: true }),
   });
 };
